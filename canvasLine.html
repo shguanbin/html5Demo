@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+
+<canvas id="myCanvas" width="300" height="300" style="border:1px solid #c3c3c3;">
+绘制回形线
+</canvas>
+
+<script type="text/javascript">
+
+var c=document.getElementById("myCanvas");
+var cxt=c.getContext("2d");
+cxt.moveTo(0,1);
+cxt.stroke();
+
+var w=50
+var h=50
+
+var x=0
+var y=2
+var step=1
+
+var xtype='m'
+var ytype='m'
+
+var nstep=1
+var xindex=(w-nstep)
+var yindex=(h-nstep)
+
+var item=window.setInterval(function(){
+
+if(x<xindex&&xtype=='m'){
+xm()
+}
+else if(y<yindex&&ytype=='m'){
+ym()
+xtype='n'
+}
+else if(xtype=='n'&&x>nstep){
+xn()
+ytype='n'
+if(x==nstep+1){
+nstep+=3
+}
+}
+else if(ytype=='n'&&y>nstep){
+yn()
+if(y==nstep+1){
+nstep+=3
+xtype='m'
+ytype='m'
+xindex=(w-nstep)
+yindex=(h-nstep)
+}
+}
+else{
+clearInterval(item)
+}
+
+console.log(x+':'+y)
+},20)
+
+function xm(){
+x=parseInt(x+step)
+cxt.lineTo(x,y);
+cxt.stroke();
+}
+
+function xn(){
+x=parseInt(x-step)
+cxt.lineTo(x,y);
+cxt.stroke();
+}
+
+function ym(){
+y=parseInt(y+step)
+cxt.lineTo(x,y);
+cxt.stroke();
+
+}
+
+
+
+function yn(){
+y=parseInt(y-step)
+cxt.lineTo(x,y);
+cxt.stroke();
+}
+
+</script>
+
+</body>
+</html>
